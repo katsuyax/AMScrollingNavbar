@@ -78,6 +78,8 @@ open class ScrollingNavigationController: UINavigationController, UIGestureRecog
    */
   open var followers: [UIView] = []
 
+  open var gestureHandlingEnabled = true
+
   open fileprivate(set) var gestureRecognizer: UIPanGestureRecognizer?
   var delayDistance: CGFloat = 0
   var maxDelay: CGFloat = 0
@@ -190,6 +192,10 @@ open class ScrollingNavigationController: UINavigationController, UIGestureRecog
   // MARK: - Gesture recognizer
 
   func handlePan(_ gesture: UIPanGestureRecognizer) {
+    guard gestureHandlingEnabled else {
+        return
+    }
+    
     if gesture.state != .failed {
       if let superview = scrollableView?.superview {
         let translation = gesture.translation(in: superview)
